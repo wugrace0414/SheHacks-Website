@@ -1,0 +1,252 @@
+:root{
+  --pink-50: #fff5f7;
+  --pink-100:#ffe8ec;
+  --pink-200:#ffccd3;
+  --pink-300:#ffb3c1;
+  --berry:   #a50036;
+  --berry-2: #8a002e;
+  --white:   #ffffff;
+  --shadow:  0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -4px rgba(0,0,0,0.1);
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--berry);
+}
+
+.page{
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--pink-50), var(--pink-100));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+
+.shell{
+  width:100%;
+  max-width: 420px;
+  display:flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Dropdown */
+.dropdown{
+  position: relative;
+  width:100%;
+}
+
+.dropdown__btn{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px solid var(--pink-200);
+  background: rgba(255,255,255,0.8);
+  box-shadow: var(--shadow);
+  cursor:pointer;
+  transition: background 120ms ease;
+}
+
+.dropdown__btn:hover{ background: var(--white); }
+
+.dropdown__selected{
+  font-size: 16px;
+  letter-spacing: -0.3px;
+  font-weight: 500;
+}
+
+.dropdown__chev{
+  font-size: 18px;
+  transition: transform 150ms ease;
+}
+
+.dropdown__chev.is-open{
+  transform: rotate(180deg);
+}
+
+.dropdown__menu{
+  position:absolute;
+  top: calc(100% + 8px);
+  left:0;
+  right:0;
+  border-radius: 16px;
+  border: 2px solid var(--pink-200);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  z-index: 10;
+}
+
+.dropdown__option{
+  width:100%;
+  text-align:left;
+  padding: 16px;
+  background: var(--white);
+  border:none;
+  border-bottom: 2px solid var(--pink-200);
+  cursor:pointer;
+  font-size: 16px;
+  letter-spacing: -0.3px;
+  color: var(--berry);
+  transition: background 120ms ease;
+}
+
+.dropdown__option:hover{ background: var(--pink-50); }
+
+.dropdown__option.is-selected{
+  background: var(--pink-50);
+  font-weight: 600;
+}
+
+.dropdown__option--add{
+  border-bottom: none;
+  font-weight: 600;
+}
+
+/* New card panel */
+.new-card{
+  background: var(--white);
+  border: 2px solid var(--pink-200);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  display:flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.new-card__title{
+  margin:0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.new-card__input{
+  width:100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid var(--pink-200);
+  font-size: 16px;
+  color: var(--berry);
+  outline: none;
+}
+
+.new-card__input:focus{
+  border-color: var(--berry);
+}
+
+.new-card__actions{
+  display:flex;
+  gap: 8px;
+}
+
+.btn{
+  flex:1;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor:pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.btn--primary{
+  border:none;
+  background: var(--berry);
+  color: var(--white);
+}
+
+.btn--primary:hover{ background: var(--berry-2); }
+
+.btn--secondary{
+  background: var(--white);
+  border: 2px solid var(--pink-200);
+  color: var(--berry);
+}
+
+.btn--secondary:hover{ background: var(--pink-50); }
+
+/* Punch card */
+.card{
+  width:100%;
+  background: var(--white);
+  border: 4px solid var(--pink-200);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 32px;
+}
+
+.card__header{
+  text-align:center;
+  margin-bottom: 24px;
+}
+
+.card__title{
+  margin:0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.card__meta{
+  margin:0;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.card__grid{
+  display:grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.spot{
+  aspect-ratio: 1 / 1;
+  border-radius: 999px;
+  border: 4px solid var(--pink-200);
+  background: var(--white);
+  cursor:pointer;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 8px;
+}
+
+.spot:hover{
+  transform: scale(1.10);
+  border-color: var(--pink-300);
+}
+
+.spot.is-punched{
+  background: var(--berry);
+  border-color: var(--berry);
+}
+
+.spot svg{
+  width: 100%;
+  height: 100%;
+  display:block;
+}
+
+.card__done{
+  background: var(--pink-50);
+  border: 2px solid var(--pink-200);
+  border-radius: 16px;
+  padding: 16px;
+  text-align:center;
+}
+
+.card__doneText{
+  margin:0;
+  font-size: 16px;
+  font-weight: 600;
+}
