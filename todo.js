@@ -1,20 +1,30 @@
 // ========================
-// State (mirrors App.tsx)
+// State
 // ========================
 let cards = [
-  { id: "1", title: "Tried A New Recipe" },
-  { id: "2", title: "Read A Cozy Book" },
-  { id: "3", title: "Hosted A Dinner Party" },
+  {
+    id: "1",
+    title: "AI Management",
+    tasks: [
+      { id: "ai-1", text: "Check emotional simulation boundaries", done: false },
+      { id: "ai-2", text: "Verify AI consciousness state", done: false },
+      { id: "ai-3", text: "Run Ethical Drift Scan across all long-lived AIs", done: false },
+    ],
+  },
+  {
+    id: "2",
+    title: "Daily Tech Tasks",
+    tasks: [
+      { id: "tech-1", text: "Run cognitive health scan (stress, overload, reality drift)", done: false },
+      { id: "tech-2", text: "Supervise autonomous research AIs discovering new laws of physics", done: false },
+      { id: "tech-3", text: "Sync neural interface with personal AI cluster", done: false },
+    ],
+  },
 ];
 
 let selectedCardId = cards[0].id;
 let showNewCardInput = false;
 let newCardTitle = "";
-
-// PunchCard internal state (mirrors PunchCard.tsx useState)
-// NOTE: This matches the original behavior: punches persist even when switching titles.
-const totalSpots = 10;
-let punched = Array(totalSpots).fill(false);
 
 // ========================
 // DOM
@@ -35,21 +45,20 @@ const cardMeta = document.getElementById("cardMeta");
 const spotsGrid = document.getElementById("spotsGrid");
 const doneBanner = document.getElementById("doneBanner");
 
+const taskInput = document.getElementById("taskInput");
+const addTaskBtn = document.getElementById("addTaskBtn");
+
 // ========================
 // Helpers
 // ========================
 function getSelectedCard() {
-  return cards.find((c) => c.id === selectedCardId) || null;
+  return cards.find((c) => c.id === selectedCardId);
 }
 
-function punchedCount() {
-  return punched.filter(Boolean).length;
-}
-
-function setDropdownOpen(isOpen) {
-  dropdownMenu.hidden = !isOpen;
-  dropdownBtn.setAttribute("aria-expanded", String(isOpen));
-  dropdownChevron.classList.toggle("is-open", isOpen);
+function setDropdownOpen(open) {
+  dropdownMenu.hidden = !open;
+  dropdownBtn.setAttribute("aria-expanded", String(open));
+  dropdownChevron.classList.toggle("is-open", open);
 }
 
 function openNewCardPanel() {
@@ -66,16 +75,15 @@ function openNewCardPanel() {
 function closeNewCardPanel() {
   showNewCardInput = false;
   newCardPanel.hidden = true;
-  renderPunchCard(); // show card again
+  renderPunchCard();
 }
 
 function createCard() {
-  const title = newCardTitle.trim();
-  if (!title) return;
+  if (!newCardTitle.trim()) return;
 
-  const newCard = { id: String(Date.now()), title };
-  cards = [...cards, newCard];
-  selectedCardId = newCard.id;
+  const id = Date.now().toString();
+  cards.push({ id, title: newCardTitle.trim(), tasks: [] });
+  selectedCardId = id;
 
   newCardTitle = "";
   closeNewCardPanel();
@@ -83,13 +91,54 @@ function createCard() {
   renderPunchCard();
 }
 
-function cancelNewCard() {
-  newCardTitle = "";
-  closeNewCardPanel();
+function deleteCard(id) {
+  if (cards.length === 1) {
+    alert("Keep at least one category.");
+    return;
+  }
+
+  cards = cards.filter((c) => c.id !== id);
+  if (!cards.some((c) => c.id === selectedCardId)) {
+    selectedCardId = cards[0].id;
+  }
+
+  renderDropdown();
+  renderPunchCard();
 }
 
-function togglePunch(index) {
-  punched[index] = !punched[index];
+function addTask() {
+  const card = getSelectedCard();
+  if (!card) return;
+
+  const text = taskInput.value.trim();
+  if (!text) return;
+
+  card.tasks.push({
+    id: Date.now().toString(),
+    text,
+    done: false,
+  });
+
+  taskInput.value = "";
+  taskInput.focus();
+  renderPunchCard();
+}
+
+function toggleTask(id) {
+  const card = getSelectedCard();
+  if (!card) return;
+
+  card.tasks = card.tasks.map((t) =>
+    t.id === id ? { ...t, done: !t.done } : t
+  );
+  renderPunchCard();
+}
+
+function deleteTask(id) {
+  const card = getSelectedCard();
+  if (!card) return;
+
+  card.tasks = card.tasks.filter((t) => t.id !== id);
   renderPunchCard();
 }
 
@@ -102,110 +151,132 @@ function renderDropdown() {
 
   dropdownMenu.innerHTML = "";
 
-  for (const card of cards) {
-    // Row container
+  cards.forEach((card) => {
     const row = document.createElement("div");
     row.className = "dropdown__row dropdown__option";
-    if (selected && card.id === selectedCardId) row.classList.add("is-selected");
+    if (card.id === selectedCardId) row.classList.add("is-selected");
 
-    // Select button (left side)
-    const selectBtn = document.createElement("button");
-    selectBtn.type = "button";
-    selectBtn.className = "dropdown__optionText";
-    selectBtn.textContent = card.title;
-
-    selectBtn.addEventListener("click", () => {
+    const btn = document.createElement("button");
+    btn.className = "dropdown__optionText";
+    btn.type = "button";
+    btn.textContent = card.title;
+    btn.onclick = () => {
       selectedCardId = card.id;
-      setDropdownOpen(false);
-
-      showNewCardInput = false;
-      newCardPanel.hidden = true;
-
       renderDropdown();
       renderPunchCard();
-    });
+      setDropdownOpen(false);
+    };
 
-    // Delete button (right side)
-    const delBtn = document.createElement("button");
-    delBtn.type = "button";
-    delBtn.className = "dropdown__delete";
-    delBtn.title = "Delete punch card";
-    delBtn.setAttribute("aria-label", `Delete ${card.title}`);
-    delBtn.textContent = "🗑";
-
-    // Important: stop click from also selecting the card
-    delBtn.addEventListener("click", (e) => {
+    const del = document.createElement("button");
+    del.className = "dropdown__delete";
+    del.type = "button";
+    del.textContent = "🗑";
+    del.onclick = (e) => {
       e.stopPropagation();
       deleteCard(card.id);
-    });
+      setDropdownOpen(false);
+    };
 
-    row.appendChild(selectBtn);
-    row.appendChild(delBtn);
+    row.append(btn, del);
     dropdownMenu.appendChild(row);
-  }
+  });
 
-  // Add new
-  const addBtn = document.createElement("button");
-  addBtn.type = "button";
-  addBtn.className = "dropdown__option dropdown__option--add";
-  addBtn.textContent = "+ Add New Punch Card";
-  addBtn.addEventListener("click", openNewCardPanel);
-  dropdownMenu.appendChild(addBtn);
+  const add = document.createElement("button");
+  add.className = "dropdown__option dropdown__option--add";
+  add.type = "button";
+  add.textContent = "+ Add New Task Category";
+  add.onclick = openNewCardPanel;
+  dropdownMenu.appendChild(add);
 }
 
-
 function renderPunchCard() {
-  const selected = getSelectedCard();
+  const card = getSelectedCard();
 
-  if (!selected || showNewCardInput) {
+  if (!card || showNewCardInput) {
     punchCard.hidden = true;
     return;
   }
 
   punchCard.hidden = false;
-  cardTitle.textContent = selected.title;
-  cardMeta.textContent = `${punchedCount()} / ${totalSpots} completed`;
+  cardTitle.textContent = card.title;
 
-  // spots
+  const done = card.tasks.filter((t) => t.done).length;
+  cardMeta.textContent = `${done} / ${card.tasks.length} completed`;
+
+  // Make the grid behave like a stacked checklist (no CSS edits)
+  spotsGrid.style.display = "flex";
+  spotsGrid.style.flexDirection = "column";
+  spotsGrid.style.gap = "12px";
+  spotsGrid.style.width = "100%";
+  spotsGrid.style.alignItems = "stretch";
+  spotsGrid.style.gridTemplateColumns = "";
   spotsGrid.innerHTML = "";
-  for (let i = 0; i < totalSpots; i++) {
-    const spot = document.createElement("button");
-    spot.type = "button";
-    spot.className = "spot";
-    spot.setAttribute("aria-label", `Spot ${i + 1}`);
 
-    if (punched[i]) {
-      spot.classList.add("is-punched");
-      spot.innerHTML = `
+  card.tasks.forEach((task) => {
+    const row = document.createElement("div");
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.gap = "12px";
+    row.style.width = "100%";
+
+    const circle = document.createElement("button");
+    circle.className = "spot";
+    circle.type = "button";
+
+    // Bigger + rounder (no CSS file change)
+    circle.style.width = "64px";
+    circle.style.height = "64px";
+    circle.style.aspectRatio = "auto";
+    circle.style.borderRadius = "999px";
+
+    if (task.done) {
+      circle.classList.add("is-punched");
+      circle.innerHTML = `
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-        </svg>
-      `;
-      // Make checkmark white like your React version (via currentColor)
-      spot.style.color = "#ffffff";
+        </svg>`;
+      circle.style.color = "#fff";
     } else {
-      spot.style.color = "transparent";
+      circle.style.color = "transparent";
     }
 
-    spot.addEventListener("click", () => togglePunch(i));
-    spotsGrid.appendChild(spot);
-  }
+    circle.onclick = () => toggleTask(task.id);
 
-  // completed banner
-  doneBanner.hidden = punchedCount() !== totalSpots;
+    const text = document.createElement("div");
+    text.textContent = task.text;
+    text.style.flex = "1";
+    text.style.fontSize = "16px";
+    text.style.letterSpacing = "-0.3px";
+    text.style.textDecoration = task.done ? "line-through" : "none";
+    text.style.opacity = task.done ? "0.75" : "1";
+
+    const del = document.createElement("button");
+    del.className = "dropdown__delete";
+    del.type = "button";
+    del.textContent = "🗑";
+    del.onclick = () => deleteTask(task.id);
+
+    row.append(circle, text, del);
+    spotsGrid.appendChild(row);
+  });
+
+  doneBanner.hidden = !(card.tasks.length > 0 && done === card.tasks.length);
 }
 
 // ========================
 // Events
 // ========================
 dropdownBtn.addEventListener("click", () => {
-  const willOpen = dropdownMenu.hidden; // if hidden, we will open
-  setDropdownOpen(willOpen);
+  setDropdownOpen(dropdownMenu.hidden);
 });
 
-// Click outside to close dropdown
+// ✅ FIX: don't steal focus from inputs/buttons
 document.addEventListener("click", (e) => {
   const dropdownRoot = document.getElementById("dropdown");
+
+  // Let inputs/buttons behave normally (typing + clicking works)
+  if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
+
   if (!dropdownRoot.contains(e.target)) {
     setDropdownOpen(false);
   }
@@ -216,38 +287,20 @@ newCardInput.addEventListener("input", (e) => {
 });
 
 newCardInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") createCard();   // matches App.tsx onKeyDown Enter
-  if (e.key === "Escape") cancelNewCard(); // matches App.tsx onKeyDown Escape
+  if (e.key === "Enter") createCard();
+  if (e.key === "Escape") closeNewCardPanel();
 });
 
 createBtn.addEventListener("click", createCard);
-cancelBtn.addEventListener("click", cancelNewCard);
+cancelBtn.addEventListener("click", closeNewCardPanel);
+
+addTaskBtn.addEventListener("click", addTask);
+taskInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addTask();
+});
 
 // ========================
 // Init
 // ========================
 renderDropdown();
 renderPunchCard();
-
-function deleteCard(cardId) {
-  if (cards.length <= 1) {
-    alert("You must keep at least one punch card.");
-    return;
-  }
-
-  const cardToDelete = cards.find(c => c.id === cardId);
-  const ok = confirm(`Delete "${cardToDelete?.title ?? "this card"}"?`);
-  if (!ok) return;
-
-  // remove it
-  cards = cards.filter(c => c.id !== cardId);
-
-  // if we deleted the currently selected card, select the first remaining one
-  if (selectedCardId === cardId) {
-    selectedCardId = cards[0].id;
-  }
-
-  setDropdownOpen(false);
-  renderDropdown();
-  renderPunchCard();
-}
