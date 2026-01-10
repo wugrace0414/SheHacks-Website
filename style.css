@@ -1,7 +1,14 @@
-.aboutpage {
+.one {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* grow with viewport and content */
   background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
-  background-size: cover;      /* fills the area */
-  background-position: center; /* centers image */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;               /* full screen */
+}
+
+.aboutpage{
+  padding-top: 200px;  /* moves the h1 down */
+  text-align: center;               /* full screen */
 }
