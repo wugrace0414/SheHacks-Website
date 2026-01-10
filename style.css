@@ -1,0 +1,7 @@
+.aboutpage {
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
+  background-size: cover;      /* fills the area */
+  background-position: center; /* centers image */
+  background-repeat: no-repeat;
+  height: 100vh;               /* full screen */
+}
