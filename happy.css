@@ -1,10 +1,13 @@
 /* Keep your background + full-screen dimensions exactly */
 /* Simple navigation bar */
 @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
+
 body {
   font-family: "Unica One", system-ui, sans-serif;
   margin: 0;
 }
+
+/* NAVBAR (unchanged) */
 .navbar{
   position: fixed;
   top: 20px;
@@ -15,17 +18,17 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  width: 600px;              /* ← makes it longer */
-  padding: 12px 40px;        /* ← more horizontal space */
-  gap: 0;                    /* spacing handled by justify-content */
+  width: 600px;
+  padding: 12px 40px;
+  gap: 0;
 
   border-radius: 999px;
 
   background: rgba(255,255,255,0.65);
-border: 1px solid rgba(255, 120, 200, 0.35);
-box-shadow:
-  0 8px 24px rgba(255, 120, 200, 0.25),
-  0 0 16px rgba(255,255,255,0.4);
+  border: 1px solid rgba(255, 120, 200, 0.35);
+  box-shadow:
+    0 8px 24px rgba(255, 120, 200, 0.25),
+    0 0 16px rgba(255,255,255,0.4);
 
   z-index: 1000;
 }
@@ -49,19 +52,29 @@ box-shadow:
   text-shadow: 0 0 12px rgba(255, 79, 216, 0.8);
 }
 
+/* BACKGROUND (same image, now "frozen" while scrolling) */
 .aboutpage {
   background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
-  background-size: cover;      /* fills the area */
-  background-position: center; /* centers image */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;               /* full screen */
+  background-attachment: fixed; /* <-- frozen background feel */
+
+  min-height: 200vh;  /* <-- enables scrolling */
   width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+/* Hero section takes first screen */
+.hero{
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
 }
 
 /* Centering container */
 .center{
-  height: 100%;
   display: grid;
   place-items: center;
   text-align: center;
@@ -89,6 +102,14 @@ box-shadow:
   text-shadow: 0 0 18px rgba(255, 79, 216, 0.15);
 }
 
+.scroll-hint{
+  margin-top: 22px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.75);
+  text-shadow: 0 0 14px rgba(255, 79, 216, 0.18);
+}
+
 /* Intro float-up animation */
 .logo-intro{
   animation: floatUp 1100ms cubic-bezier(.14,.9,.18,1) forwards;
@@ -107,10 +128,71 @@ box-shadow:
   100% { opacity: 0; transform: translateX(18px); }
 }
 
+/* Mission area */
+.mission-section{
+  min-height: 100vh;
+  display: block;
+  padding: 140px 0 120px; /* space so it sits under the navbar */
+}
+
+/* Glass pane hovering above the frozen background */
+.glass-pane{
+  width: min(920px, calc(100% - 48px));
+  margin: 0 auto;
+
+  padding: 34px 28px;
+  border-radius: 26px;
+
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.28),
+    0 0 22px rgba(255, 120, 200, 0.14);
+
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+
+  color: rgba(255,255,255,0.92);
+  text-shadow: 0 0 18px rgba(255, 79, 216, 0.10);
+
+  position: sticky;
+  top: 110px; /* "hovering" under navbar while you scroll */
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 380ms ease, transform 380ms ease;
+}
+
+.glass-pane.show{
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.glass-pane h2{
+  margin: 0 0 12px;
+  font-family: "Orbitron", system-ui, sans-serif;
+  letter-spacing: 2px;
+  font-size: 20px;
+  color: rgba(255,255,255,0.95);
+}
+
+.glass-pane p{
+  margin: 0 0 22px;
+  line-height: 1.65;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  color: rgba(255,255,255,0.90);
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
   .logo, .logo-intro, .logo-intro::after{
     animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .glass-pane{
+    transition: none;
     opacity: 1;
     transform: none;
   }

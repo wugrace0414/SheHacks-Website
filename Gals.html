@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gals</title>
@@ -11,30 +11,64 @@
 </head>
 <body>
   <nav class="navbar">
-  <a href="Gals.html" class="nav-item">Home</a>
-  <a href="team.html" class="nav-item">Team</a>
-  <a href="todo.html" class="nav-item">To-Do List</a>
-</nav>
+    <a href="Gals.html" class="nav-item">Home</a>
+    <a href="team.html" class="nav-item">Team</a>
+    <a href="todo.html" class="nav-item">To-Do List</a>
+  </nav>
+
   <div class="aboutpage">
-    <!-- Center container -->
-    <div class="center">
-      <!-- Replace text with your logo image if you want -->
-      <!-- Example: <img class="logo" src="logo.png" alt="Gals Logo"> -->
-      <img class="logo" src="SheHacks-Website/logo.png" alt="Gals Logo">
+    <!-- Hero (first screen) -->
+    <section class="hero">
+      <div class="center">
+        <img class="logo" src="SheHacks-Website/logo.png" alt="Gals Logo">
+        <div class="subtitle">Emily, Valenzia, Grace, Jessica</div>
+        <div class="scroll-hint">Scroll ↓</div>
+      </div>
+    </section>
 
+    <!-- Scroll-reveal glass pane -->
+    <section class="mission-section" aria-labelledby="mission-title">
+      <div class="glass-pane" id="glassPane">
+        <h2 id="mission-title">Our Mission</h2>
+        <p>
+          Our mission is to make getting things done feel motivating, achievable, and genuinely rewarding.
+          We believe productivity shouldn’t be driven by guilt, overwhelm, or endless to-do lists, but by systems
+          that celebrate progress and consistency. By turning everyday habits into visible, finite goals, we help
+          people build momentum, stay engaged, and feel proud of the effort they put in, one punch at a time!
+        </p>
 
-      <div class="subtitle">Emily, Valenzia, Grace, Jessica</div>
-    </div>
+        <h2>Why We Made Punch It</h2>
+        <p>
+          We created this product because traditional to-do lists don’t align with how motivation actually works.
+          They focus on outcomes instead of effort, reset progress too quickly, and often highlight what’s left undone
+          rather than what’s been accomplished. With how fast-paced the 2200s are, traditional to-do lists are no longer
+          sustainable. Our punch-card approach transforms tasks into a game-like experience with clear progress, tangible
+          rewards, and built-in encouragement, making it easier to stay consistent, follow through, and enjoy the process
+          of building better habits.
+        </p>
+      </div>
+    </section>
   </div>
 
   <script>
     // Float-up intro animation on page enter
     window.addEventListener("DOMContentLoaded", () => {
       const logo = document.querySelector(".logo");
-      // restart animation if needed
       logo.classList.remove("logo-intro");
       void logo.offsetWidth;
       logo.classList.add("logo-intro");
+
+      // Scroll reveal for glass pane
+      const pane = document.getElementById("glassPane");
+      const revealAt = Math.floor(window.innerHeight * 0.35);
+
+      const onScroll = () => {
+        if (window.scrollY > revealAt) pane.classList.add("show");
+        else pane.classList.remove("show");
+      };
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll(); // run once on load
     });
   </script>
 </body>
