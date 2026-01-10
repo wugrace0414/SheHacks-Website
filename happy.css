@@ -1,0 +1,105 @@
+/* Keep your background + full-screen dimensions exactly */
+.aboutpage {
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
+  background-size: cover;      /* fills the area */
+  background-position: center; /* centers image */
+  background-repeat: no-repeat;
+  height: 100vh;               /* full screen */
+  width: 100vw;
+  overflow: hidden;
+
+  /* Same clean default font family (system font) */
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Centering container */
+.center{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+/* Logo look (pink cyberpunk) */
+.logo{
+  position: relative;
+
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-weight: 900;
+  letter-spacing: 8px;
+  font-size: 64px;
+  padding: 18px 30px;
+  border-radius: 18px;
+
+  color: #ffe6fb;
+
+  background: rgba(255, 30, 170, 0.12);
+  border: 1px solid rgba(255, 30, 170, 0.55);
+
+  box-shadow:
+    0 0 0 6px rgba(255, 30, 170, 0.12),
+    0 0 30px rgba(255, 79, 216, 0.35),
+    0 18px 50px rgba(0,0,0,0.35);
+
+  text-shadow:
+    0 0 8px rgba(255, 79, 216, 0.6),
+    0 0 18px rgba(155, 92, 255, 0.35);
+
+  /* no animation */
+  opacity: 1;
+  transform: none;
+}
+
+/* Small subtitle (optional) */
+.subtitle{
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 0 18px rgba(255, 79, 216, 0.15);
+}
+
+/* Intro float-up animation */
+.logo-intro{
+  animation: floatUp 1100ms cubic-bezier(.14,.9,.18,1) forwards;
+}
+
+/* Extra tiny neon shimmer */
+.logo-intro::after{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius: 18px;
+  pointer-events:none;
+  background: linear-gradient(90deg,
+    rgba(255,79,216,0.0),
+    rgba(255,79,216,0.18),
+    rgba(155,92,255,0.0)
+  );
+  filter: blur(10px);
+  opacity: 0;
+  animation: shimmer 1100ms ease-out forwards;
+}
+
+/* Keyframes */
+@keyframes floatUp{
+  0%   { opacity: 0; transform: translateY(42px) scale(0.98); }
+  60%  { opacity: 1; transform: translateY(-6px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0px) scale(1); }
+}
+
+@keyframes shimmer{
+  0%   { opacity: 0; transform: translateX(-12px); }
+  55%  { opacity: 1; transform: translateX(10px); }
+  100% { opacity: 0; transform: translateX(18px); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .logo, .logo-intro, .logo-intro::after{
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gals</title>
+  <link rel="stylesheet" href="happy.css" />
+</head>
+<body>
+  <div class="aboutpage">
+    <!-- Center container -->
+    <div class="center">
+      <!-- Replace text with your logo image if you want -->
+      <!-- Example: <img class="logo" src="logo.png" alt="Gals Logo"> -->
+      <div class="logo" aria-label="Logo">GALS</div>
+
+      <div class="subtitle">Emily, Valenzia, Grace, Jessica</div>
+    </div>
+  </div>
+
+  <script>
+    // Float-up intro animation on page enter
+    window.addEventListener("DOMContentLoaded", () => {
+      const logo = document.querySelector(".logo");
+      // restart animation if needed
+      logo.classList.remove("logo-intro");
+      void logo.offsetWidth;
+      logo.classList.add("logo-intro");
+    });
+  </script>
+</body>
+</html>
