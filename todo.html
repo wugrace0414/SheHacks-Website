@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Punch Cards</title>
+
+    <!-- Inter font (optional, but matches your design vibe) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="todo.css" />
+  </head>
+
+  <body>
+    <main class="page">
+      <section class="shell">
+        <!-- Dropdown -->
+        <div class="dropdown" id="dropdown">
+          <button class="dropdown__btn" id="dropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="dropdown__selected" id="dropdownSelected">Loading...</span>
+            <span class="dropdown__chev" id="dropdownChevron" aria-hidden="true">▾</span>
+          </button>
+
+          <div class="dropdown__menu" id="dropdownMenu" role="listbox" aria-label="Punch card list" hidden>
+            <!-- options injected by JS -->
+          </div>
+        </div>
+
+        <!-- Create new card panel -->
+        <div class="new-card" id="newCardPanel" hidden>
+          <h3 class="new-card__title">Create New Punch Card</h3>
+
+          <input
+            id="newCardInput"
+            class="new-card__input"
+            type="text"
+            placeholder="Enter punch card title..."
+            autocomplete="off"
+          />
+
+          <div class="new-card__actions">
+            <button id="createBtn" class="btn btn--primary" type="button">Create</button>
+            <button id="cancelBtn" class="btn btn--secondary" type="button">Cancel</button>
+          </div>
+        </div>
+
+        <!-- Punch card -->
+        <div class="card" id="punchCard" hidden>
+          <div class="card__header">
+            <h2 class="card__title" id="cardTitle"></h2>
+            <p class="card__meta" id="cardMeta"></p>
+          </div>
+
+          <div class="card__grid" id="spotsGrid">
+            <!-- spots injected by JS -->
+          </div>
+
+          <div class="card__done" id="doneBanner" hidden>
+            <p class="card__doneText">🎉 Completed! Great job!</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="todo.js"></script>
+  </body>
+</html>
