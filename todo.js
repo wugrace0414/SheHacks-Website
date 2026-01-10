@@ -100,25 +100,24 @@ function renderDropdown() {
   const selected = getSelectedCard();
   dropdownSelected.textContent = selected ? selected.title : "";
 
-  // rebuild menu
   dropdownMenu.innerHTML = "";
 
-  // options
   for (const card of cards) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "dropdown__option";
-    btn.textContent = card.title;
+    // Row container
+    const row = document.createElement("div");
+    row.className = "dropdown__row dropdown__option";
+    if (selected && card.id === selectedCardId) row.classList.add("is-selected");
 
-    if (selected && card.title === selected.title) {
-      btn.classList.add("is-selected");
-    }
+    // Select button (left side)
+    const selectBtn = document.createElement("button");
+    selectBtn.type = "button";
+    selectBtn.className = "dropdown__optionText";
+    selectBtn.textContent = card.title;
 
-    btn.addEventListener("click", () => {
-      // onSelect(title) behavior in App.tsx
+    selectBtn.addEventListener("click", () => {
       selectedCardId = card.id;
       setDropdownOpen(false);
-      // If the create panel was open, keep it closed after selecting
+
       showNewCardInput = false;
       newCardPanel.hidden = true;
 
@@ -126,10 +125,26 @@ function renderDropdown() {
       renderPunchCard();
     });
 
-    dropdownMenu.appendChild(btn);
+    // Delete button (right side)
+    const delBtn = document.createElement("button");
+    delBtn.type = "button";
+    delBtn.className = "dropdown__delete";
+    delBtn.title = "Delete punch card";
+    delBtn.setAttribute("aria-label", `Delete ${card.title}`);
+    delBtn.textContent = "🗑";
+
+    // Important: stop click from also selecting the card
+    delBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteCard(card.id);
+    });
+
+    row.appendChild(selectBtn);
+    row.appendChild(delBtn);
+    dropdownMenu.appendChild(row);
   }
 
-  // add new
+  // Add new
   const addBtn = document.createElement("button");
   addBtn.type = "button";
   addBtn.className = "dropdown__option dropdown__option--add";
@@ -137,6 +152,7 @@ function renderDropdown() {
   addBtn.addEventListener("click", openNewCardPanel);
   dropdownMenu.appendChild(addBtn);
 }
+
 
 function renderPunchCard() {
   const selected = getSelectedCard();
@@ -212,3 +228,26 @@ cancelBtn.addEventListener("click", cancelNewCard);
 // ========================
 renderDropdown();
 renderPunchCard();
+
+function deleteCard(cardId) {
+  if (cards.length <= 1) {
+    alert("You must keep at least one punch card.");
+    return;
+  }
+
+  const cardToDelete = cards.find(c => c.id === cardId);
+  const ok = confirm(`Delete "${cardToDelete?.title ?? "this card"}"?`);
+  if (!ok) return;
+
+  // remove it
+  cards = cards.filter(c => c.id !== cardId);
+
+  // if we deleted the currently selected card, select the first remaining one
+  if (selectedCardId === cardId) {
+    selectedCardId = cards[0].id;
+  }
+
+  setDropdownOpen(false);
+  renderDropdown();
+  renderPunchCard();
+}

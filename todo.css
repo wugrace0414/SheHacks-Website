@@ -250,3 +250,45 @@ body{
   font-size: 16px;
   font-weight: 600;
 }
+
+/* Dropdown option layout w/ delete button */
+.dropdown__row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0; /* button inside handles padding */
+}
+
+.dropdown__optionText{
+  flex: 1;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dropdown__optionText:hover{
+  background: var(--pink-50);
+}
+
+.dropdown__delete{
+  flex: 0 0 auto;
+  margin-right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 2px solid var(--pink-200);
+  background: #fff;
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.dropdown__delete:hover{
+  background: var(--pink-50);
+}
