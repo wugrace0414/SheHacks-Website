@@ -1,0 +1,113 @@
+/* Keep your background + full-screen dimensions exactly */
+/* Simple navigation bar */
+@import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
+body {
+  font-family: "Unica One", system-ui, sans-serif;
+  margin: 0;
+}
+.navbar{
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 28px;
+
+  padding: 12px 22px;
+  border-radius: 999px;
+
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 30, 170, 0.35);
+  box-shadow:
+    0 0 20px rgba(255, 79, 216, 0.25);
+
+  z-index: 1000;
+}
+
+.nav-item{
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 14px;
+
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+
+  padding: 6px 10px;
+  border-radius: 8px;
+
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.nav-item:hover{
+  color: #ff4fd8;
+  text-shadow: 0 0 12px rgba(255, 79, 216, 0.8);
+}
+
+.aboutpage {
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
+  background-size: cover;      /* fills the area */
+  background-position: center; /* centers image */
+  background-repeat: no-repeat;
+  height: 100vh;               /* full screen */
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Centering container */
+.center{
+  height: 100%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+/* Logo look (pink cyberpunk) */
+.logo{
+  position: relative;
+  width: 400px;
+  height: auto;
+  display: block;
+
+  filter:
+    drop-shadow(0 0 10px rgba(255, 79, 216, 0.6))
+    drop-shadow(0 0 24px rgba(155, 92, 255, 0.35));
+}
+
+/* Small subtitle (optional) */
+.subtitle{
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 0 18px rgba(255, 79, 216, 0.15);
+}
+
+/* Intro float-up animation */
+.logo-intro{
+  animation: floatUp 1100ms cubic-bezier(.14,.9,.18,1) forwards;
+}
+
+/* Keyframes */
+@keyframes floatUp{
+  0%   { opacity: 0; transform: translateY(42px) scale(0.98); }
+  60%  { opacity: 1; transform: translateY(-6px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0px) scale(1); }
+}
+
+@keyframes shimmer{
+  0%   { opacity: 0; transform: translateX(-12px); }
+  55%  { opacity: 1; transform: translateX(10px); }
+  100% { opacity: 0; transform: translateX(18px); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .logo, .logo-intro, .logo-intro::after{
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
