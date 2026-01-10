@@ -10,18 +10,22 @@ body {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
-  gap: 28px;
 
-  padding: 12px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 600px;              /* ← makes it longer */
+  padding: 12px 40px;        /* ← more horizontal space */
+  gap: 0;                    /* spacing handled by justify-content */
+
   border-radius: 999px;
 
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(10px);
-
-  border: 1px solid rgba(255, 30, 170, 0.35);
-  box-shadow:
-    0 0 20px rgba(255, 79, 216, 0.25);
+  background: rgba(255,255,255,0.65);
+border: 1px solid rgba(255, 120, 200, 0.35);
+box-shadow:
+  0 8px 24px rgba(255, 120, 200, 0.25),
+  0 0 16px rgba(255,255,255,0.4);
 
   z-index: 1000;
 }
@@ -31,7 +35,7 @@ body {
   letter-spacing: 2px;
   font-size: 14px;
 
-  color: rgba(255,255,255,0.9);
+  color: #ca3f90;
   text-decoration: none;
 
   padding: 6px 10px;
