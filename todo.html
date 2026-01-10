@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Punch Cards</title>
+    <title>Task Categories</title>
 
-    <!-- Inter font (optional, but matches your design vibe) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -15,47 +14,58 @@
 
   <body>
     <main class="page">
-      <section class="shell">
+      <!-- STRETCHED + CENTERED -->
+      <section class="shell" style="max-width: 680px; width: 100%;">
         <!-- Dropdown -->
         <div class="dropdown" id="dropdown">
           <button class="dropdown__btn" id="dropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
             <span class="dropdown__selected" id="dropdownSelected">Loading...</span>
-            <span class="dropdown__chev" id="dropdownChevron" aria-hidden="true">▾</span>
+            <span class="dropdown__chev" id="dropdownChevron">▾</span>
           </button>
 
-          <div class="dropdown__menu" id="dropdownMenu" role="listbox" aria-label="Punch card list" hidden>
-            <!-- options injected by JS -->
-          </div>
+          <div class="dropdown__menu" id="dropdownMenu" hidden></div>
         </div>
 
-        <!-- Create new card panel -->
+        <!-- Create new category -->
         <div class="new-card" id="newCardPanel" hidden>
-          <h3 class="new-card__title">Create New Punch Card</h3>
+          <h3 class="new-card__title">Create New Task Category</h3>
 
           <input
             id="newCardInput"
             class="new-card__input"
             type="text"
-            placeholder="Enter punch card title..."
-            autocomplete="off"
+            placeholder="Enter task category title..."
           />
 
           <div class="new-card__actions">
-            <button id="createBtn" class="btn btn--primary" type="button">Create</button>
-            <button id="cancelBtn" class="btn btn--secondary" type="button">Cancel</button>
+            <button id="createBtn" class="btn btn--primary">Create</button>
+            <button id="cancelBtn" class="btn btn--secondary">Cancel</button>
           </div>
         </div>
 
-        <!-- Punch card -->
-        <div class="card" id="punchCard" hidden>
+        <!-- Task Card -->
+        <div class="card" id="punchCard" hidden style="padding:36px;">
           <div class="card__header">
             <h2 class="card__title" id="cardTitle"></h2>
             <p class="card__meta" id="cardMeta"></p>
           </div>
 
-          <div class="card__grid" id="spotsGrid">
-            <!-- spots injected by JS -->
+          <!-- Add task -->
+          <div style="display:flex; gap:12px; margin-bottom:16px;">
+            <input
+              id="taskInput"
+              class="new-card__input"
+              type="text"
+              placeholder="Add a task..."
+              style="margin:0;"
+            />
+            <button id="addTaskBtn" class="btn btn--primary" style="width:auto;">
+              Add
+            </button>
           </div>
+
+          <!-- Checklist -->
+          <div class="card__grid" id="spotsGrid"></div>
 
           <div class="card__done" id="doneBanner" hidden>
             <p class="card__doneText">🎉 Completed! Great job!</p>
