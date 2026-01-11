@@ -1,13 +1,14 @@
-/* Keep your background + full-screen dimensions exactly */
-/* Simple navigation bar */
 @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap');
 
 body {
-  font-family: "Unica One", system-ui, sans-serif;
+  /* ✅ Normal text everywhere becomes Noto Sans */
+  font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   margin: 0;
 }
 
-/* NAVBAR (unchanged) */
+/* ===================== NAVBAR (keep same look) ===================== */
 .navbar{
   position: fixed;
   top: 20px;
@@ -20,7 +21,6 @@ body {
 
   width: 600px;
   padding: 12px 40px;
-  gap: 0;
 
   border-radius: 999px;
 
@@ -31,6 +31,9 @@ body {
     0 0 16px rgba(255,255,255,0.4);
 
   z-index: 1000;
+
+  /* ✅ Keep navbar font as “title-y” */
+  font-family: "Unica One", system-ui, sans-serif;
 }
 
 .nav-item{
@@ -45,6 +48,9 @@ body {
   border-radius: 8px;
 
   transition: color 0.2s ease, text-shadow 0.2s ease;
+
+  /* ✅ Keep navbar items same */
+  font-family: "Unica One", system-ui, sans-serif;
 }
 
 .nav-item:hover{
@@ -52,20 +58,20 @@ body {
   text-shadow: 0 0 12px rgba(255, 79, 216, 0.8);
 }
 
-/* BACKGROUND (same image, now "frozen" while scrolling) */
-.aboutpage {
+/* ===================== BACKGROUND ===================== */
+.aboutpage{
   background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* <-- frozen background feel */
+  background-attachment: fixed;
 
-  min-height: 200vh;  /* <-- enables scrolling */
+  min-height: 200vh;
   width: 100vw;
   overflow-x: hidden;
 }
 
-/* Hero section takes first screen */
+/* ===================== HERO ===================== */
 .hero{
   height: 100vh;
   display: grid;
@@ -73,33 +79,24 @@ body {
   text-align: center;
 }
 
-/* Centering container */
 .center{
   display: grid;
   place-items: center;
-  text-align: center;
 }
 
-/* Logo look (pink cyberpunk) */
 .logo{
-  position: relative;
   width: 400px;
-  height: auto;
-  display: block;
-
   filter:
     drop-shadow(0 0 10px rgba(255, 79, 216, 0.6))
     drop-shadow(0 0 24px rgba(155, 92, 255, 0.35));
 }
 
-/* Small subtitle (optional) */
 .subtitle{
   margin-top: 14px;
   font-size: 14px;
-  font-weight: 700;
   letter-spacing: 2px;
   color: rgba(255,255,255,0.85);
-  text-shadow: 0 0 18px rgba(255, 79, 216, 0.15);
+  /* subtitle is normal text -> Noto Sans (inherits from body) */
 }
 
 .scroll-hint{
@@ -107,56 +104,39 @@ body {
   font-size: 12px;
   letter-spacing: 3px;
   color: rgba(255,255,255,0.75);
-  text-shadow: 0 0 14px rgba(255, 79, 216, 0.18);
+  /* inherits Noto Sans */
 }
 
-/* Intro float-up animation */
-.logo-intro{
-  animation: floatUp 1100ms cubic-bezier(.14,.9,.18,1) forwards;
-}
-
-/* Keyframes */
-@keyframes floatUp{
-  0%   { opacity: 0; transform: translateY(42px) scale(0.98); }
-  60%  { opacity: 1; transform: translateY(-6px) scale(1.01); }
-  100% { opacity: 1; transform: translateY(0px) scale(1); }
-}
-
-@keyframes shimmer{
-  0%   { opacity: 0; transform: translateX(-12px); }
-  55%  { opacity: 1; transform: translateX(10px); }
-  100% { opacity: 0; transform: translateX(18px); }
-}
-
-/* Mission area */
+/* ===================== MISSION SECTION ===================== */
 .mission-section{
   min-height: 100vh;
-  display: block;
-  padding: 140px 0 120px; /* space so it sits under the navbar */
+  padding: 140px 0 120px;
 }
 
-/* Glass pane hovering above the frozen background */
+/* ===================== GLASS PANE (OPTION 1) ===================== */
 .glass-pane{
   width: min(920px, calc(100% - 48px));
   margin: 0 auto;
 
   padding: 34px 28px;
-  border-radius: 26px;
+  border-radius: 30px;
 
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 120, 200, 0.18);
+  border: 1px solid rgba(255, 160, 220, 0.35);
+
+  backdrop-filter: blur(18px) saturate(1.35);
+  -webkit-backdrop-filter: blur(18px) saturate(1.35);
+
   box-shadow:
+    inset 0 0 18px rgba(255, 200, 235, 0.25),
     0 18px 55px rgba(0, 0, 0, 0.28),
-    0 0 22px rgba(255, 120, 200, 0.14);
-
-  backdrop-filter: blur(14px) saturate(1.25);
-  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+    0 0 22px rgba(255, 120, 200, 0.25);
 
   color: rgba(255,255,255,0.92);
   text-shadow: 0 0 18px rgba(255, 79, 216, 0.10);
 
   position: sticky;
-  top: 110px; /* "hovering" under navbar while you scroll */
+  top: 110px;
 
   opacity: 0;
   transform: translateY(18px);
@@ -165,35 +145,29 @@ body {
 
 .glass-pane.show{
   opacity: 1;
-  transform: translateY(0px);
+  transform: translateY(0);
 }
 
+/* ✅ Titles not affected */
 .glass-pane h2{
-  margin: 0 0 12px;
   font-family: "Orbitron", system-ui, sans-serif;
   letter-spacing: 2px;
   font-size: 20px;
-  color: rgba(255,255,255,0.95);
+  margin-bottom: 12px;
 }
 
+/* ✅ Mission paragraphs -> Noto Sans (inherits body) */
 .glass-pane p{
-  margin: 0 0 22px;
   line-height: 1.65;
   font-size: 16px;
-  letter-spacing: 0.4px;
-  color: rgba(255,255,255,0.90);
+  margin-bottom: 22px;
 }
 
-/* Respect reduced motion */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce){
-  .logo, .logo-intro, .logo-intro::after{
-    animation: none !important;
-    opacity: 1;
-    transform: none;
-  }
   .glass-pane{
-    transition: none;
     opacity: 1;
     transform: none;
+    transition: none;
   }
 }

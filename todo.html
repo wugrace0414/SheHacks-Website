@@ -7,26 +7,34 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Titles stay Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Normal text becomes Noto Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="todo.css" />
+    <link rel="stylesheet" href="happy.css" />
   </head>
 
   <body>
     <main class="page">
-      <!-- STRETCHED + CENTERED -->
+      <nav class="navbar">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="team.html" class="nav-item">Team</a>
+        <a href="todo.html" class="nav-item">To-Do List</a>
+      </nav>
+
       <section class="shell" style="max-width: 680px; width: 100%;">
-        <!-- Dropdown -->
         <div class="dropdown" id="dropdown">
           <button class="dropdown__btn" id="dropdownBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
             <span class="dropdown__selected" id="dropdownSelected">Loading...</span>
             <span class="dropdown__chev" id="dropdownChevron">▾</span>
           </button>
-
           <div class="dropdown__menu" id="dropdownMenu" hidden></div>
         </div>
 
-        <!-- Create new category -->
         <div class="new-card" id="newCardPanel" hidden>
           <h3 class="new-card__title">Create New Task Category</h3>
 
@@ -43,14 +51,12 @@
           </div>
         </div>
 
-        <!-- Task Card -->
         <div class="card" id="punchCard" hidden style="padding:36px;">
           <div class="card__header">
             <h2 class="card__title" id="cardTitle"></h2>
             <p class="card__meta" id="cardMeta"></p>
           </div>
 
-          <!-- Add task -->
           <div style="display:flex; gap:12px; margin-bottom:16px;">
             <input
               id="taskInput"
@@ -64,7 +70,6 @@
             </button>
           </div>
 
-          <!-- Checklist -->
           <div class="card__grid" id="spotsGrid"></div>
 
           <div class="card__done" id="doneBanner" hidden>

@@ -3,32 +3,47 @@
   --pink-100:#ffe8ec;
   --pink-200:#ffccd3;
   --pink-300:#ffb3c1;
-  --berry:   #d81b60; 
-  --berry-2: #c2185b; 
+  --berry:   #d81b60;
+  --berry-2: #c2185b;
   --white:   #ffffff;
   --shadow:  0px 10px 15px -3px rgba(0,0,0,0.1), 0px 4px 6px -4px rgba(0,0,0,0.1);
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
+
+
 *{ box-sizing: border-box; }
 
+/* Normal text font (titles will be overridden below) */
 body{
   margin:0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Noto Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--berry);
 }
 
+/* Page now uses frozen background image + scroll */
 .page{
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--pink-50), var(--pink-100));
+  min-height: 200vh; /* ensures scroll like other pages */
+  width: 100vw;
+  overflow-x: hidden;
+
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/027/755/445/original/flowing-ripple-pattern-silky-background-3d-rendering-video.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* frozen background */
+
   display:flex;
-  align-items:center;
+  align-items:flex-start; /* let content start lower (not vertically centered) */
   justify-content:center;
-  padding:32px;
+
+  padding: 140px 32px 64px; /* space for navbar + breathing room */
 }
 
+/* Main container */
 .shell{
   width:100%;
-  max-width: 420px;
+  max-width: 680px;
   display:flex;
   flex-direction: column;
   gap: 24px;
@@ -60,6 +75,7 @@ body{
 .dropdown__selected{
   font-size: 16px;
   letter-spacing: -0.3px;
+  font-family: "unica one", system-ui, sans-serif;
   font-weight: 500;
 }
 
@@ -121,6 +137,12 @@ body{
   display:flex;
   flex-direction: column;
   gap: 16px;
+}
+
+/* Titles should NOT be affected by Noto Sans */
+.new-card__title,
+.card__title{
+  font-family: "Unica One", system-ui, sans-serif;
 }
 
 .new-card__title{
@@ -201,6 +223,7 @@ body{
   opacity: 0.7;
 }
 
+/* Checklist grid (JS overrides this to flex-column, left intact) */
 .card__grid{
   display:grid;
   grid-template-columns: repeat(5, 1fr);
@@ -257,7 +280,7 @@ body{
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 0; /* button inside handles padding */
+  padding: 0;
 }
 
 .dropdown__optionText{

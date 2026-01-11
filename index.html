@@ -1,63 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Gals</title>
-    <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gals</title>
+  <link rel="stylesheet" href="happy.css" />
 </head>
 <body>
-   <!-- <nav class="navbar">
-    <div >
-         <img src="images/logo.png" alt="Description of image" class="logo">
-    </div>
-    <ul class="nav-links">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">Team</a></li>
-      <li><a href="#services">To-Do List</a></li>
-    </ul>
+  <nav class="navbar">
+    <a href="index.html" class="nav-item">Home</a>
+    <a href="team.html" class="nav-item">Team</a>
+    <a href="todo.html" class="nav-item">To-Do List</a>
   </nav>
--->
 
+  <div class="aboutpage">
+    <!-- Hero (first screen) -->
+    <section class="hero">
+      <div class="center">
+        <img class="logo" src="SheHacks-Website/logo.png" alt="Gals Logo">
+        <img class="logo" src="punch.png" style="width: 700px;" alt="Gals Logo">
+        <div class="subtitle">Emily, Valenzia, Grace, Jessica</div>
+        <div class="scroll-hint">Scroll ↓</div>
+      </div>
+    </section>
 
-    <section class="one">
-    <div class="aboutpage">
-      <h1>Meet the Team</h1>
-    </div>
-  </section>
+    <!-- Scroll-reveal glass pane -->
+    <section class="mission-section" aria-labelledby="mission-title">
+      <div class="glass-pane" id="glassPane">
+        <h2 id="mission-title">Our Mission</h2>
+        <p>
+          Our mission is to make getting things done feel motivating, achievable, and genuinely rewarding.
+          We believe productivity shouldn’t be driven by guilt, overwhelm, or endless to-do lists, but by systems
+          that celebrate progress and consistency. By turning everyday habits into visible, finite goals, we help
+          people build momentum, stay engaged, and feel proud of the effort they put in, one punch at a time!
+        </p>
 
-  
-  <section class="two">
-    <img src="images/ChatGPT Image2 Jan 10, 2026, 11_39_05 AM.png" alt="Description of image" class="photo">
-    <section class="three">
-    <h2>Emily Ruan</h2>
-<ul>
-  <li>Loves the beach</li>
-  <li>Favorite food is sushi</li>
-  <li>Has a natural streak of blonde hair</li>
-</ul>  </section>
-  <section class="three">
-    <h2>Jessica Zhang</h2>
-    <ul>
-  <li>Born in Edmonton</li>
-  <li>Favorite food is popcorn</li>
-  <li>Favorite artist is Taylor Swift</li>
-</ul>
-  </section>
-  <section class="three">
-    <h2>Valenzia Lau</h2>
-    <ul>
-  <li>Favorite Pokemon is Vulpix</li>
-  <li>Loves rollerskating</li>
-  <li>Can make gourmet custard pudding</li>
-</ul>
-</section>
-  <section class="three">
-    <h2>Grace Wu</h2>
-    <ul>
-  <li>Born in Calgary</li>
-  <li>Loves crocheting</li>
-  <li>Would eat for a living if she could</li>
-</ul>
-</section>
+        <h2>Why We Made Punch It</h2>
+        <p>
+          We created this product because traditional to-do lists don’t align with how motivation actually works.
+          They focus on outcomes instead of effort, reset progress too quickly, and often highlight what’s left undone
+          rather than what’s been accomplished. With how fast-paced the 2200s are, traditional to-do lists are no longer
+          sustainable. Our punch-card approach transforms tasks into a game-like experience with clear progress, tangible
+          rewards, and built-in encouragement, making it easier to stay consistent, follow through, and enjoy the process
+          of building better habits.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Float-up intro animation on page enter
+    window.addEventListener("DOMContentLoaded", () => {
+      const logo = document.querySelector(".logo");
+      logo.classList.remove("logo-intro");
+      void logo.offsetWidth;
+      logo.classList.add("logo-intro");
+
+      // Scroll reveal for glass pane
+      const pane = document.getElementById("glassPane");
+      const revealAt = Math.floor(window.innerHeight * 0.35);
+
+      const onScroll = () => {
+        if (window.scrollY > revealAt) pane.classList.add("show");
+        else pane.classList.remove("show");
+      };
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll(); // run once on load
+    });
+  </script>
 </body>
 </html>
